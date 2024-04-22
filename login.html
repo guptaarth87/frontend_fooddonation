@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form with Light Button</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-box">
+        <h2>Login Form</h2>
+        <form id="loginForm" action="">
+            <div class="user-box">
+                <input  id="username" type="text" required>
+                <label for="">Username</label>
+            </div>
+            <div class="user-box">
+                <input type="password" id="password" required>
+                <label for="">password</label>
+            </div>
+            <div class="user-box">
+                <select name="user-type" id="user-type">
+                    <option value="donor">Donor</option>
+                    <option value="beneficiary">Beneficiary</option>
+                </select>
+            </div>
+            <a href="">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <button type="submit" class="anim-button">Submit</button>
+            </a>
+        </form>
+    </div>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Collect form data
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const userType = document.getElementById('user-type').value;
+
+        // Create request data object
+        const requestData = {
+            email: username,
+            password: password
+        };
+        console.log(requestData);
+        // Send POST request to backend
+        try {
+            const response = await fetch('http://localhost:1111/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            alert(data.message);
+            window.location.href = '/' // Display response message
+            console.log(data); // Log the response from the backend
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+});
+
+</script>
+</html>

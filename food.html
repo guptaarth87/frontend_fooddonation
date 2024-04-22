@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url(Images/Solid-Black-Website-Background.jpg)no-repeat;
+            background-size: cover;
+        }
+        .container {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.814);
+        }
+        h2{
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .form-group input[type="checkbox"] {
+            margin-bottom: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .form-group label {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .form-group button[type="submit"] {
+            width: 100%;
+            padding: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .form-group button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 767px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Food Details</h2>
+        <form id="foodForm" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="food_name">Food Name:</label>
+                <input type="text" id="food_name" name="food_name" required>
+            </div>
+            <div class="form-group">
+                <label for="veg_non_veg">Veg/Non Veg:</label><br><br>
+                <label for="food_type">Veg</label>
+                <input type="checkbox" id="veg" name="food_type" value="veg" style="margin-right: 5px;">
+                <label for="food_type">Non Veg</label>
+                <input type="checkbox" id="non_veg" name="food_type" value="non_veg">
+            </div>
+            <div class="form-group">
+                <label for="expiration_date">Expiration Date:</label>
+                <input type="date" id="expiration_date" name="expiration_date" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="text" id="quantity" name="quantity" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="extra_detail">Extra Detail:</label>
+                <textarea id="extra_detail" name="extra_detail" rows="3" cols="30"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="picture">Upload Picture:</label>
+                <input type="file" id="picture" name="picture" accept="image/*">
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="agree" name="agree" required>
+                <label for="agree">By checking this box, I confirm that the above information provided by me is true.</label>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('foodForm');
+
+            form.addEventListener('submit',async function(event) {
+                event.preventDefault(); // Prevent the form from submitting
+                const formData = new FormData(form);
+                const fileInput = document.getElementById('picture');
+                formData.append('picture', fileInput.files[0]);
+                // Collect form data
+               
+                // Convert form data to object
+                const formDataObj = {};
+                formData.forEach((value, key) => {
+                    formDataObj[key] = value;
+                });
+                 console.log(formDataObj)
+                // Log form data to the console
+                let req_data ={
+                    'foodName':formDataObj.food_name,
+                    'isVeg':formDataObj.food_type,
+                    'dateTime':formDataObj.expiration_date,
+                    'quantity':formDataObj.quantity , 
+                    'extraDetail':formDataObj.extra_detail,
+                    'imageUrl':formDataObj.picture
+                }
+                console.log(req_data);
+                try {
+                    const response = await fetch('http://localhost:1111/addfooddata', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(req_data),
+                    });
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const data = await response.json();
+                    console.log(data); 
+                    alert(data.message);
+                    // Log the response from the backend
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

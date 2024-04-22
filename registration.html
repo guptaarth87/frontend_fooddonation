@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:url('./Images/reg_image.jpeg')  no-repeat center fixed; 
+            background-size: cover;
+        }
+        .form-box {
+            background-color: #f1f1f1;
+            padding: 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 500px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: vertical;
+            min-height: 100px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>Registration Form</h1>
+        
+            <!-- Your form fields go here -->
+        
+        <form id="registrationForm" action="food.html">
+            <div class="form-group">
+                <label for="name"><b>Name</b></label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email"><b>Email</b></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password"><b>Password</b></label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="state"><b>State of Residence</b></label>
+                <select id="state" name="state" required>
+                    <option value="">Select State</option>
+                    <option value="andaman and nicobar islands">Andaman and Nicobar Islands</option>
+<option value="andhra pradesh">Andhra Pradesh</option>
+<option value="arunachal pradesh">Arunachal Pradesh</option>
+<option value="assam">Assam</option>
+<option value="bihar">Bihar</option>
+<option value="chandigarh">Chandigarh</option>
+<option value="chhattisgarh">Chhattisgarh</option>
+<option value="dadra and nagar haveli">Dadra and Nagar Haveli</option>
+<option value="daman and diu">Daman and Diu</option>
+<option value="delhi">Delhi</option>
+<option value="goa">Goa</option>
+<option value="gujarat">Gujarat</option>
+<option value="haryana">Haryana</option>
+<option value="himachal pradesh">Himachal Pradesh</option>
+<option value="jammu and kashmir">Jammu and Kashmir</option>
+<option value="jharkhand">Jharkhand</option>
+<option value="karnataka">Karnataka</option>
+<option value="kerala">Kerala</option>
+<option value="ladakh">Ladakh</option>
+<option value="lakshadweep">Lakshadweep</option>
+<option value="madhya pradesh">Madhya Pradesh</option>
+<option value="maharashtra">Maharashtra</option>
+<option value="manipur">Manipur</option>
+<option value="meghalaya">Meghalaya</option>
+<option value="mizoram">Mizoram</option>
+<option value="nagaland">Nagaland</option>
+<option value="odisha">Odisha</option>
+<option value="puducherry">Puducherry</option>
+<option value="punjab">Punjab</option>
+<option value="rajasthan">Rajasthan</option>
+<option value="sikkim">Sikkim</option>
+<option value="tamil nadu">Tamil Nadu</option>
+<option value="telangana">Telangana</option>
+<option value="tripura">Tripura</option>
+<option value="uttar pradesh">Uttar Pradesh</option>
+<option value="uttarakhand">Uttarakhand</option>
+<option value="west bengal">West Bengal</option>
+
+                    <!-- Add more states here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="city"><b>City</b></label>
+                <input type="city" id="city" name="city" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone"><b>Phone</b></label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10,15}" required>
+
+            </div>
+            <div class="form-group">
+                <label for="Address"><b> Address</b></label>
+                <textarea id="Address" name="Address" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Donor or Beneficiary">Donor/Beneficiary:</label><br><br>
+                <label for="Donor">Donor</label>
+                <input type="checkbox" id="Donor" name="type_user" value="Donor" style="margin-right: 5px;">
+                <label for="Beneficiary">Beneficiary</label>
+                <input type="checkbox" id="Beneficiary" name="type_user" value="Beneficiary">
+            </div>
+            <div class="form-group">
+                <button type="submit"><b>Register</b></button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const donorCheckbox = document.getElementById('Donor');
+        const beneficiarycheckbox = document.getElementById('Beneficiary');
+       
+        donorCheckbox.addEventListener('click', function() {
+        if (donorCheckbox.checked && beneficiarycheckbox.checked) {
+            donorCheckbox.checked = false;
+        alert('You can only select one option: Donor or  Beneficiary.');
+        }
+        });
+        beneficiarycheckbox.addEventListener('click', function() {
+        if (donorCheckbox.checked && beneficiarycheckbox.checked) {
+            beneficiarycheckbox.checked = false;
+        alert('You can only select one option: Donor or  Beneficiary.');
+        }
+       });
+       document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Collect form data
+        const formData = new FormData(form);
+        
+        // Convert form data to object
+        const formDataObj = {};
+        formData.forEach((value, key) => {
+            formDataObj[key] = value;
+        });
+         console.log(formDataObj);
+         let signupdata ={
+           'username': formDataObj.name,
+           'email': formDataObj.email,
+            'password':formDataObj.password,
+           'state': formDataObj.state,
+            'city':formDataObj.city,
+           'phoneNo': formDataObj.phone,
+           'typeOfUser': formDataObj.type_user,
+           'address': formDataObj.Address
+         }
+        // Send form data to backend
+        try {
+            const response = await fetch('http://localhost:1111/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(signupdata),
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log(data); // Log the response from the backend
+            alert(data.response);
+        } catch (error) {
+            console.error('Error:', error);
+            alert("Eroor in registration");
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
